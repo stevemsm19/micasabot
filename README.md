@@ -4,11 +4,7 @@ The required *Python* version for this project is *3.12.x.*
 
 ## About me
 
-My name is *Rolando* and I've been writing software for over 20 years, always driven by my passion for research and education. I helped start the research program at Jala Foundation that grew into what's now *Jala R&D*, where I currently *lead the Generative AI team*.
-
-Throughout my career, I've worked on everything from traditional software development to *Machine Learning* and *Blockchain* projects, always trying to create technology that makes a positive impact.
-
-Starting this year, I am also a professor at *Jala University* teaching machine learning.
+Hello, my name is *Oscar*, I am 26 years old, and I am from Bogotá, Colombia. My experience in the world of software development is what I acquired during my time at university. This degree has been quite challenging for me because I also work at Airbnb in customer service, which is why I speak Portuguese and have an intermediate level of English. The reason I chose this career is because I love automating processes and really enjoy analyzing data on a small scale. I'm not the best at math, but I believe that with practice and study, anything is possible.
 
 ## Setup environment
 

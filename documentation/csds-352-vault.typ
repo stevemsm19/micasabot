@@ -3,7 +3,7 @@
 
 #mainTitle(
   title: "CSDS-352 Vault",
-  subtitle: "Jane Doe <jane.doe@example.com>",
+  subtitle: "Oscar Muñoz <oscar.munoz@jala.university>",
   content: [
     #v(160pt)
     #contentBox(
