@@ -1,9 +1,11 @@
+from typing import Dict, Any
+
 class Document:
-    def __init__(self, page_content, metadata):
+    def __init__(self, page_content: str, metadata: Dict[str, Any]):
         self.page_content = page_content
         self.metadata = metadata
 
 class DocumentChunk:
-    def __init__(self, content, metadata):
+    def __init__(self, content: str, metadata: Dict[str, Any]):
         self.content = content
         self.metadata = metadata
