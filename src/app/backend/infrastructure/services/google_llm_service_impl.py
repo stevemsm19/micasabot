@@ -1,6 +1,8 @@
+from typing import Any
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from app.backend.domain.services.llm_service import LLMService
+
 
 class GoogleLLMServiceImpl(LLMService):
     def __init__(self, api_key: str, model: str):
@@ -19,8 +21,8 @@ class GoogleLLMServiceImpl(LLMService):
 
         self.prompt = PromptTemplate.from_template(template)
 
-    async def generate_answer(self, context: str, question: str) -> str:
+    async def generate_answer(self, context: str, question: str) -> Any:
         chain = self.prompt | self.llm
 
         response = chain.invoke({"context": context, "question": question})
-        return response.content
+        return str(response.content)

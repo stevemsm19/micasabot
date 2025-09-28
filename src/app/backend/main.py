@@ -1,5 +1,7 @@
 from fastapi import FastAPI
-from app.backend.entrypoints.controllers.document_controller import router as document_router
+from app.backend.entrypoints.controllers.document_controller import (
+    router as document_router,
+)
 
 app = FastAPI(
     title="RAG Semantic Search API",

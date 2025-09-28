@@ -1,11 +1,10 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-class Settings(BaseSettings):
-    google_api_key: str
-    gemini_model: str
-    embedding_model: str
-    collection_name: str
 
-    model_config = SettingsConfigDict(
-        env_file=".env"
-    )
+class Settings(BaseSettings):
+    google_api_key: str = "YOUR_GOOGLE_API_KEY"
+    gemini_model: str = "gemini-2.5-flash"
+    embedding_model: str = "all-MiniLM-L6-v2"
+    collection_name: str = "documents"
+
+    model_config = SettingsConfigDict(env_file=".env")

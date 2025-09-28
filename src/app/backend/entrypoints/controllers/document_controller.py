@@ -1,4 +1,5 @@
 from fastapi import UploadFile, File, APIRouter, HTTPException, Depends
+from typing import Dict, Any
 
 from app.backend.application.services.document_service import DocumentService
 from app.backend.application.schemas.document_schemas import (
@@ -10,14 +11,15 @@ from app.backend.config.dependencies import get_document_service
 
 router = APIRouter(prefix="/api", tags=["documents"])
 
+
 @router.post("/documents/add")
 async def add_document(
     files: list[UploadFile] = File(...),
     document_service: DocumentService = Depends(get_document_service),
-):
+) -> Dict[str, Any]:
     try:
         result = await document_service.add_document_from_uploads(files)
-        return {"message": "Files processed successfully", "result": result}
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -26,14 +28,17 @@ async def add_document(
 async def search_documents(
     request: SearchRequest,
     document_service: DocumentService = Depends(get_document_service),
-):
+) -> SearchResponse:
     try:
         result = await document_service.search_and_answer(request.question)
 
         context_responses = []
         for chunk in result.context:
+            score = chunk.score if chunk.score is not None else 0.0
             context_responses.append(
-                DocumentChunkResponse(content=chunk.content, metadata=chunk.metadata, score=chunk.score)
+                DocumentChunkResponse(
+                    content=chunk.content, metadata=chunk.metadata, score=score
+                )
             )
 
         return SearchResponse(

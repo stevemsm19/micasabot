@@ -1,7 +1,10 @@
 from typing import List
 from langchain_chroma import Chroma
-from app.backend.domain.repositories.vector_store_repository import VectorStoreRepository
+from app.backend.domain.repositories.vector_store_repository import (
+    VectorStoreRepository,
+)
 from app.backend.domain.entities.document import DocumentChunk
+
 
 class ChromaRepositoryImpl(VectorStoreRepository):
     def __init__(self, vector_store: Chroma):
@@ -19,7 +22,8 @@ class ChromaRepositoryImpl(VectorStoreRepository):
         return document_ids
 
     async def search_similar(
-    self, query: str, n_results: int = 3, similarity_threshold: float = 0.5) -> List[DocumentChunk]:
+        self, query: str, n_results: int = 3, similarity_threshold: float = 0.5
+    ) -> List[DocumentChunk]:
         results = self.vector_store.similarity_search_with_score(query, n_results)
 
         chunks: List[DocumentChunk] = []

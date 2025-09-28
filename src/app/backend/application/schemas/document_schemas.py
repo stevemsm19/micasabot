@@ -20,7 +20,7 @@ class SearchRequest(BaseModel):
 class DocumentChunkResponse(BaseModel):
     content: str
     metadata: Dict[str, Any]
-    score: float    
+    score: float
 
 
 class SearchResponse(BaseModel):

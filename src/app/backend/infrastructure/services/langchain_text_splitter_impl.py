@@ -1,7 +1,9 @@
 from typing import List
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document as LC_Document
 from app.backend.domain.services.text_splitter_service import TextSplitterService
 from app.backend.domain.entities.document import Document, DocumentChunk
+
 
 class RecursiveTextSplitterImpl(TextSplitterService):
     def __init__(self, chunk_size: int, chunk_overlap: int):
@@ -12,7 +14,12 @@ class RecursiveTextSplitterImpl(TextSplitterService):
 
     def split_documents(self, documents: List[Document]) -> List[DocumentChunk]:
 
-        all_splits = self.text_splitter.split_documents(documents)
+        lc_docs: List[LC_Document] = [
+            LC_Document(page_content=doc.page_content, metadata=doc.metadata)
+            for doc in documents
+        ]
+
+        all_splits = self.text_splitter.split_documents(lc_docs)
 
         chunks = []
         for split in all_splits:

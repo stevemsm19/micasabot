@@ -3,13 +3,22 @@ from typing import List
 from fastapi import UploadFile, HTTPException
 from langchain_community.document_loaders import PyPDFLoader
 from app.backend.domain.entities.document import Document
-from app.backend.domain.repositories.document_loader_repository import DocumentLoaderRepository
+from app.backend.domain.repositories.document_loader_repository import (
+    DocumentLoaderRepository,
+)
+
 
 class DocumentLoaderRepositoryImpl(DocumentLoaderRepository):
     def __init__(self, upload_dir: str):
         self.upload_dir = upload_dir
 
     def save_file(self, file: UploadFile) -> str:
+
+        if file.filename is None:
+            raise HTTPException(
+                status_code=400, detail="Uploaded file must have a filename"
+            )
+
         try:
             os.makedirs(self.upload_dir, exist_ok=True)
             file_path = os.path.join(self.upload_dir, file.filename)
