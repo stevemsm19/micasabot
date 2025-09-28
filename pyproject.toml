@@ -24,10 +24,16 @@ dependencies = [
   "sentence-transformers==5.1.1",
   "fastapi==0.117.1",
   "uvicorn==0.37.0",
-  "chromadb==1.1.0",
-  "streamlit==1.49.1",
+  "streamlit==1.50.0",
   "python-dotenv==1.1.1",
-  "langchain==0.3.27"
+  "pydantic==2.11.9",
+  "langchain==0.3.27",
+  "langchain_chroma==0.2.6",
+  "langchain-community==0.3.30",
+  "langchain_core==0.3.76",
+  "langchain-google-genai==2.1.12",
+  "langchain_text_splitters==0.3.11",
+  "langchain_huggingface==0.3.1"
 ]
 
 [project.scripts]
@@ -36,3 +42,5 @@ csds-352-vault = "app.main:main"
 [tool.mypy]
 python_version = "3.12"
 strict = true
+mypy_path = "src"
+explicit_package_bases = true
