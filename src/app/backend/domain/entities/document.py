@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 class Document:
     def __init__(self, page_content: str, metadata: Dict[str, Any]):
@@ -6,7 +6,7 @@ class Document:
         self.metadata = metadata
 
 class DocumentChunk:
-    def __init__(self, content: str, metadata: Dict[str, Any], score: float):
+    def __init__(self, content: str, metadata: Dict[str, Any], score: Optional[float] = None):
         self.content = content
         self.metadata = metadata
         self.score = score
