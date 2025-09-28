@@ -19,7 +19,7 @@ class ChromaRepositoryImpl(VectorStoreRepository):
         return document_ids
 
     async def search_similar(
-    self, query: str, n_results: int = 3, similarity_threshold: float = 0.6) -> List[DocumentChunk]:
+    self, query: str, n_results: int = 3, similarity_threshold: float = 0.5) -> List[DocumentChunk]:
         results = self.vector_store.similarity_search_with_score(query, n_results)
 
         chunks: List[DocumentChunk] = []

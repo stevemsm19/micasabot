@@ -8,24 +8,24 @@ from app.backend.domain.entities.query import QueryResult
 class DocumentService:
     def __init__(
         self,
-        document_repository: VectorStoreRepository,
-        pdf_repository: DocumentLoaderRepository,
+        vector_store_repository: VectorStoreRepository,
+        document_loader_repository: DocumentLoaderRepository,
         text_splitter: TextSplitterService,
         llm_service: LLMService
     ):
-        self.document_repository = document_repository
-        self.pdf_repository = pdf_repository
+        self.vector_store_repository = vector_store_repository
+        self.document_loader_repository = document_loader_repository
         self.text_splitter = text_splitter
         self.llm_service = llm_service
     
     async def add_document_from_uploads(self, file_paths: List[str]) -> dict:
         try:
-            pages = await self.pdf_repository.load_documents(file_paths)
+            pages = await self.document_loader_repository.load_documents(file_paths)
             
             chunks = self.text_splitter.split_documents(pages)
             
 
-            document_ids = await self.document_repository.add_document(chunks)
+            document_ids = await self.vector_store_repository.add_document(chunks)
             
             return {
                 "message": "Documents added successfully",
@@ -38,13 +38,11 @@ class DocumentService:
     
     async def search_and_answer(self, question: str) -> QueryResult:
         try:
-            context_chunks = await self.document_repository.search_similar(question, n_results=3)
+            context_chunks = await self.vector_store_repository.search_similar(question, n_results=3)
         
             context = "\n\n".join([chunk.content for chunk in context_chunks])
             
             answer = await self.llm_service.generate_answer(context, question)
-
-            print(context)
             
             return QueryResult(
                 answer=answer,

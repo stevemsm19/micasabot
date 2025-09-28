@@ -6,11 +6,10 @@ class GoogleLLMServiceImpl(LLMService):
     def __init__(self, api_key: str, model: str):
         self.llm = ChatGoogleGenerativeAI(model=model, api_key=api_key)
 
-        template = """Usa la siguiente información para responder la pregunta al final.
+        template = """Usa únicamente el contexto proporcionado para responder la pregunta final.
         Si no sabes la respuesta, di que no sabes, no intentes inventar una respuesta.
         Usa máximo tres oraciones y mantén la respuesta lo más concisa posible.
         Siempre di "¡gracias por preguntar!" al final de la respuesta.
-        Responde en español.
 
         {context}
 
@@ -22,5 +21,6 @@ class GoogleLLMServiceImpl(LLMService):
 
     async def generate_answer(self, context: str, question: str) -> str:
         chain = self.prompt | self.llm
+
         response = chain.invoke({"context": context, "question": question})
         return response.content
