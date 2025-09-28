@@ -1,2 +1,7 @@
 nvidia-*
 sympy
+
+cachetools
+marshmallow
+posthog
+pydantic_core

@@ -1,5 +1,6 @@
 from typing import List
 from langchain_chroma import Chroma
+from langchain_core.documents import Document as LangchainDocument
 from app.backend.domain.repositories.vector_store_repository import (
     VectorStoreRepository,
 )
@@ -11,11 +12,10 @@ class ChromaRepositoryImpl(VectorStoreRepository):
         self.vector_store = vector_store
 
     async def add_document(self, documents: List[DocumentChunk]) -> List[str]:
-        from langchain.schema import Document as LangChainDocument
-
+        
         lc_documents = []
         for doc in documents:
-            lc_doc = LangChainDocument(page_content=doc.content, metadata=doc.metadata)
+            lc_doc = LangchainDocument(page_content=doc.content, metadata=doc.metadata)
             lc_documents.append(lc_doc)
 
         document_ids = self.vector_store.add_documents(documents=lc_documents)

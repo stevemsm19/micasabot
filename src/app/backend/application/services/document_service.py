@@ -47,7 +47,7 @@ class DocumentService:
     async def search_and_answer(self, question: str) -> QueryResult:
         try:
             context_chunks = await self.vector_store_repository.search_similar(
-                question, n_results=3, similarity_threshold=0.5
+                question, n_results=3, similarity_threshold=0.6
             )
 
             context = "\n\n".join([chunk.content for chunk in context_chunks])

@@ -1,6 +1,6 @@
 from typing import List
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_core.documents import Document as LC_Document
+from langchain_core.documents import Document as LangchainDocument
 from app.backend.domain.services.text_splitter_service import TextSplitterService
 from app.backend.domain.entities.document import Document, DocumentChunk
 
@@ -14,8 +14,8 @@ class RecursiveTextSplitterImpl(TextSplitterService):
 
     def split_documents(self, documents: List[Document]) -> List[DocumentChunk]:
 
-        lc_docs: List[LC_Document] = [
-            LC_Document(page_content=doc.page_content, metadata=doc.metadata)
+        lc_docs: List[LangchainDocument] = [
+            LangchainDocument(page_content=doc.page_content, metadata=doc.metadata)
             for doc in documents
         ]
 
