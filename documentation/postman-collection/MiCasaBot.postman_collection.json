@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "f6202bfe-9afd-469d-9e98-8ce23e5b0a9d",
+		"name": "MiCasaBot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44844132"
+	},
+	"item": [
+		{
+			"name": "Search in Document",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"question\": \"Que es leasing habitacional?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_bot}}/api/documents/search",
+					"host": [
+						"{{url_bot}}"
+					],
+					"path": [
+						"api",
+						"documents",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Document",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"postman-cloud:///1f09c895-468e-4ae0-90cb-54b06edad180",
+								"postman-cloud:///1f09a28d-26a0-4c20-affb-5eec01f40a99",
+								"postman-cloud:///1f09bfd2-ead3-45e0-a2b8-16bc450a61c4"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url_bot}}/api/documents/add",
+					"host": [
+						"{{url_bot}}"
+					],
+					"path": [
+						"api",
+						"documents",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
