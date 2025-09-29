@@ -75,17 +75,44 @@ This command will:
 * Start the backend service.
 * Start the Chroma container for vector storage.
 
-## Enpoints
+## **Endpoints**
 
-**Base URL:** `http://localhost:8001`
+#### **Base URL:**
 
-| Method | Endpoint                | Description                             | Request Body                                                                                           |
-| ------ | ---------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| POST   | `/api/documents/add`    | Add a new document to the database       | `{ "file": "src/app/data/Decreto 431 de 2024.pdf" }`                                                   |
-| POST   | `/api/documents/search` | Search for answers in the document database | `{ "question": "Un colombiano tiene derecho a tener una vivienda?" }`                                  |
+`http://localhost:8001`
 
-**Example Usage:**
+#### 1. **Add a new document to the database**
 
-![alt text](./images/example_add_document_request.png)
+- **Method:** `POST`
+- **Endpoint:** `/api/documents/add`
+- **Description:** Adds a new document to the database.
+- **Request Body:**
 
-![alt text](./images/example_search_request.png)
+  ```json
+  { 
+    "file": "src/app/data/Decreto 431 de 2024.pdf" 
+  }
+  ```
+
+- **Example Usage:**
+
+  ![Add Document Example](./documentation/images/capstone/example_add_document_request.png)
+
+#### 2. **Search for answers in the document database**
+
+- **Method:** `POST`
+- **Endpoint:** `/api/documents/search`
+- **Description:** Search for answers within the document database.
+- **Request Body:**
+
+  ```json
+  { 
+    "question": "Un colombiano tiene derecho a tener una vivienda?" 
+  }
+  ```
+
+* **Example Usage:**
+
+  ![Search Example](./documentation/images/capstone/example_search_request.png)
+
+*You can go to the `documentation/postman-collection` to find the endpoint requests and the body of the requests.*
