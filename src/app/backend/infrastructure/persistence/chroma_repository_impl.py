@@ -12,7 +12,7 @@ class ChromaRepositoryImpl(VectorStoreRepository):
         self.vector_store = vector_store
 
     async def add_document(self, documents: List[DocumentChunk]) -> List[str]:
-        
+
         lc_documents = []
         for doc in documents:
             lc_doc = LangchainDocument(page_content=doc.content, metadata=doc.metadata)
