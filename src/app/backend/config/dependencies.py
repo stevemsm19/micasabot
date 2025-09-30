@@ -49,7 +49,7 @@ def get_document_service() -> DocumentService:
     settings = get_settings()
     vector_store = get_vector_store()
 
-    document_loader_repository = DocumentLoaderRepositoryImpl("temp_files")
+    document_loader_repository = DocumentLoaderRepositoryImpl("src/app/backend/temp_files")
     vector_store_repository = ChromaRepositoryImpl(vector_store)
 
     text_splitter = RecursiveTextSplitterImpl(chunk_size=1000, chunk_overlap=200)
