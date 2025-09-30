@@ -89,8 +89,8 @@ This command will:
 - **Request Body:**
 
   ```json
-  { 
-    "file": "src/app/data/Decreto 431 de 2024.pdf" 
+  {
+    "file": "src/app/data/Decreto 431 de 2024.pdf"
   }
   ```
 
@@ -106,12 +106,12 @@ This command will:
 - **Request Body:**
 
   ```json
-  { 
-    "question": "Un colombiano tiene derecho a tener una vivienda?" 
+  {
+    "question": "Un colombiano tiene derecho a tener una vivienda?"
   }
   ```
 
-* **Example Usage:**
+- **Example Usage:**
 
   ![Search Example](./documentation/images/capstone/example_search_request.png)
 

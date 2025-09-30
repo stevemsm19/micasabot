@@ -5,3 +5,4 @@ cachetools
 marshmallow
 posthog
 pydantic_core
+urllib3
