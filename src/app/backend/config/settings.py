@@ -6,5 +6,6 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-2.5-flash"
     embedding_model: str = "all-MiniLM-L6-v2"
     collection_name: str = "documents"
+    chroma_host: str = "localhost"
 
     model_config = SettingsConfigDict(env_file=".env")

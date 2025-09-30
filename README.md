@@ -20,7 +20,7 @@ Hello, my name is *Oscar*, I am 26 years old, and I am from Bogotá, Colombia. M
 * **Directive-based prompt pattern**: Guides the language model to generate appropriate responses based on query context and user interaction directives.
 
 ## Architecture Overview
-![alt text](./images/architecture.png)
+![alt text](./documentation/images/capstone/architecture.png)
 
 ## Setup environment
 
@@ -57,16 +57,40 @@ The pipeline is configured to:
 
 ## Running the Backend
 
+### 1. **Configure Environment Variables**
+
+Create a `.env` file in the root of your project with the following necessary variables:
+
+```js
+GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY"
+GEMINI_MODEL = "gemini-2.5-flash"
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+COLLECTION_NAME = "documents"
+CHROME_HOST = "localhost"
+```
+
+**Explanation of variables:**
+
+- **`GOOGLE_API_KEY`**: Your Google API key used for integrating Google services.
+- **`GEMINI_MODEL`**: Specifies the model used for Gemini (e.g., `"gemini-2.5-flash"`).
+- **`EMBEDDING_MODEL`**: Defines the model used for embeddings, typically used for NLP tasks (e.g., `"all-MiniLM-L6-v2"`).
+- **`COLLECTION_NAME`**: The name of the VectorDatabase collection where vectors will be stored.
+- **`CHROMA_HOST`**: Specifies the host address for Chroma.
+
+The variables specified in the `.env` file will be used by default. If any variable is missing, the application will use the default values specified in the `settings` configuration.
+
+### 2. Run service
+
 This project uses Docker Compose to run the backend service along with a **Chroma** container for vector storage. Make sure you have **Docker** and **Docker Compose** installed.
 
 To start the backend, run:
 
 ```bash
 # Using the modern docker compose
-$ docker compose up -d
+$ docker compose up -d --build
 
 # Or with
-$ docker-compose up -d
+$ docker-compose up -d --build
 ```
 
 This command will:
@@ -89,8 +113,9 @@ This command will:
 - **Request Body:**
 
   ```json
+  //form-data
   {
-    "file": "src/app/data/Decreto 431 de 2024.pdf"
+    "files": "Decreto 431 de 2024.pdf"
   }
   ```
 

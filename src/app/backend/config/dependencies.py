@@ -36,7 +36,7 @@ def get_vector_store() -> Chroma:
     settings = get_settings()
     embeddings = get_embeddings()
 
-    client = chromadb.HttpClient(host="localhost", port=8000)
+    client = chromadb.HttpClient(host=settings.chroma_host, port=8000)
 
     return Chroma(
         client=client,
