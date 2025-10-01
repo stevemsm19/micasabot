@@ -3,7 +3,7 @@ import streamlit as st
 import time
 import requests
 
-from app.frontend.config.setttings import get_settings
+from app.frontend.config.settings import get_settings
 
 settings = get_settings()
 
@@ -98,14 +98,46 @@ def handle_user_input():
             st.markdown(prompt)
     return prompt
 
-def generate_agent_response():
-    if st.session_state.messages[-1]["role"] != "assistant":
-        with st.chat_message("assistant"):
-            with st.spinner("Procesando..."):
-                placeholder = st.empty()
-                full_response = "Test." 
+def generate_agent_response(prompt, num_results, similarity_threshold):
+    if st.session_state.messages[-1]["role"] == "assistant":
+        return
+
+    with st.chat_message("assistant"):
+        with st.spinner("Procesando..."):
+            response_data, error = get_agent_response(prompt, num_results, similarity_threshold)
+
+            placeholder = st.empty()
+
+            if error:
+                placeholder.markdown(error)
+                st.session_state.messages.append({"role": "assistant", "content": error})
+            else:
+                full_response = response_data.get("answer")
                 placeholder.markdown(full_response)
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+                st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+def get_agent_response(prompt, num_results, similarity_threshold):
+    payload = {
+        "question": prompt,
+        "num_results": num_results,
+        "similarity_threshold": similarity_threshold
+    }
+
+    try:
+        response = requests.post(
+            url=f"{settings.backend_api_base_url}{settings.search_endpoint}",
+            json=payload
+        )
+
+        if response.status_code == 200:
+            return response.json(), None
+
+        error_msg = f"❌ Error {response.status_code}: {response.text}"
+        return None, error_msg
+
+    except requests.exceptions.RequestException as e:
+        return None, f"⚠️ Error de conexión: {e}"
 
 def show_temporary_message(content: str, message_type: str, duration: int = 2):
     msg = st.empty()
@@ -121,6 +153,7 @@ def show_temporary_message(content: str, message_type: str, duration: int = 2):
     msg.empty()
 
 def main():
+
     render_intro()
 
     documents = upload_documents_sidebar()
@@ -133,7 +166,7 @@ def main():
     prompt = handle_user_input()
     
     if prompt:
-        generate_agent_response()
+        generate_agent_response(prompt, num_results, similarity_threshold)
 
 if __name__ == "__main__":
     main()
