@@ -1,4 +1,18 @@
 import streamlit as st
+import time
+
+def show_temporary_message(content: str, message_type: str, duration: int = 2):
+    msg = st.empty()
+
+    if message_type == "success":
+        msg.success(content, icon="✅")
+    elif message_type == "error":
+        msg.error(content,icon="❌")
+    else:
+        msg.write(content)
+
+    time.sleep(duration)
+    msg.empty()
 
 def main():
     st.title("MiCasa Bot 🏠")
@@ -25,6 +39,11 @@ def main():
             type=["pdf", "txt"],
             accept_multiple_files=True
         )
+        if st.button("Cargar Documentos"):
+            if docs:
+                show_temporary_message("Documentos cargados correctamente.", "success")
+            else:
+                show_temporary_message("Por favor, sube al menos un archivo antes de continuar.", "error")
 
 if __name__ == "__main__":
     main()
