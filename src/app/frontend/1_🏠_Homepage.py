@@ -19,7 +19,7 @@ def render_intro():
         "También puedes subir **tus propios documentos** (PDF o TXT), y MiCasaBot te ayudará a responder preguntas basadas en su contenido."
     )
 
-def upload_sidebar_docs():
+def upload_documents_sidebar():
     with st.sidebar:
         st.subheader("Tus documentos")
         documents = st.file_uploader(
@@ -27,6 +27,10 @@ def upload_sidebar_docs():
             type=["pdf", "txt"],
             accept_multiple_files=True
         )
+        return documents
+
+def handle_upload_button(documents):
+    with st.sidebar:
         if st.button("Cargar Documentos", type="primary"):
             if documents:
                 upload_files(documents)
@@ -49,6 +53,32 @@ def upload_files(documents):
                 
         show_temporary_message("Documentos cargados correctamente.", "success")
 
+def set_variables_sidebar():
+    with st.sidebar:
+        st.markdown("---")
+        st.subheader("Parámetros del Bot")
+        st.info("Estos valores se pasan al bot para ajustar cómo recupera y prioriza los documentos almacenados.")
+
+        num_results = st.number_input(
+            label="Número de resultados",
+            min_value=1,
+            max_value=20,
+            value=3,
+            step=1,
+            help="Número de documentos más relevantes que el bot considerará en su respuesta."
+        )
+
+        similarity_threshold = st.slider(
+            label="Umbral de similitud",
+            min_value=0.0,
+            max_value=1.0,
+            value=0.7,
+            step=0.1,
+            help="Nivel mínimo de similitud requerido entre la consulta y los documentos."
+        )
+
+        return num_results, similarity_threshold
+
 def init_chat():
     if "messages" not in st.session_state:
         st.session_state.messages = [
@@ -68,7 +98,7 @@ def handle_user_input():
             st.markdown(prompt)
     return prompt
 
-def generate_bot_response():
+def generate_agent_response():
     if st.session_state.messages[-1]["role"] != "assistant":
         with st.chat_message("assistant"):
             with st.spinner("Procesando..."):
@@ -92,14 +122,18 @@ def show_temporary_message(content: str, message_type: str, duration: int = 2):
 
 def main():
     render_intro()
-    upload_sidebar_docs()
-    
+
+    documents = upload_documents_sidebar()
+    handle_upload_button(documents)
+        
     init_chat()
     display_chat_history()
 
+    num_results, similarity_threshold = set_variables_sidebar()
     prompt = handle_user_input()
+    
     if prompt:
-        generate_bot_response()
+        generate_agent_response()
 
 if __name__ == "__main__":
     main()
