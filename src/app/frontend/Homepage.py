@@ -1,20 +1,22 @@
 import streamlit as st
 
 import time
+import requests
 
 from app.frontend.config.setttings import get_settings
 
 settings = get_settings()
 
 def render_intro():
+
+    st.set_page_config("Home",page_icon="🏠")
     st.title("MiCasa Bot 🏠")
     st.info(
         "Puedes hacer preguntas sobre **adquisición de vivienda en Colombia**, como:\n"
         "- Conceptos clave (leasing habitacional, crédito hipotecario, etc.)\n"
         "- Beneficios y subsidios disponibles\n"
         "- Requisitos, tipos de vivienda, y más\n\n"
-        "📄 También puedes subir **tus propios documentos** (PDF o TXT), y MiCasaBot te ayudará a responder preguntas basadas en su contenido.",
-        icon="ℹ️"
+        "También puedes subir **tus propios documentos** (PDF o TXT), y MiCasaBot te ayudará a responder preguntas basadas en su contenido."
     )
 
 def upload_sidebar_docs():
@@ -25,11 +27,27 @@ def upload_sidebar_docs():
             type=["pdf", "txt"],
             accept_multiple_files=True
         )
-        if st.button("Cargar Documentos"):
+        if st.button("Cargar Documentos", type="primary"):
             if documents:
-                show_temporary_message("Documentos cargados correctamente.", "success")
+                upload_files(documents)
             else:
                 show_temporary_message("Por favor, sube al menos un archivo antes de continuar.", "error")
+        
+def upload_files(documents):
+    if documents is not None:
+        with st.spinner("Cargando..."):
+            for doc in documents:
+                file_payload = {"files": (doc.name, doc.getvalue(), doc.type)}
+                try:
+                    response = requests.post(f"{settings.backend_api_base_url}{settings.documents_endpoint}", files=file_payload)
+                    if response.status_code != 200:
+                        show_temporary_message(f"Error uploading {doc.name}: {response.text}","error",10)
+                        return
+                except Exception as e:
+                    show_temporary_message(f"Failed to connect to backend: {e}","error")
+                    return
+                
+        show_temporary_message("Documentos cargados correctamente.", "success")
 
 def init_chat():
     if "messages" not in st.session_state:
