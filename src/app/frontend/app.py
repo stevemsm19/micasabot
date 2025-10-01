@@ -2,6 +2,14 @@ import streamlit as st
 
 def main():
     st.title("MiCasa Bot 🏠")
+    st.info(
+        "Puedes hacer preguntas sobre **adquisición de vivienda en Colombia**, como:\n"
+        "- Conceptos clave (leasing habitacional, crédito hipotecario, etc.)\n"
+        "- Beneficios y subsidios disponibles\n"
+        "- Requisitos, tipos de vivienda, y más\n\n"
+        "📄 También puedes subir **tus propios documentos** (PDF o TXT), y MiCasaBot te ayudará a responder preguntas basadas en su contenido.",
+        icon="ℹ️"
+    )
 
     if 'messages' not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": "Hola! ¿Como puedo ayudarte?"}]
