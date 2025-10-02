@@ -225,3 +225,6 @@ pyrightconfig.json
 
 # Notes
 /class-notes
+
+# Backend
+**/temp_files/
