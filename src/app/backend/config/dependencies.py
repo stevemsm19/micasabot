@@ -19,34 +19,29 @@ from app.backend.infrastructure.services.google_llm_service_impl import (
     GoogleLLMServiceImpl,
 )
 
-
 @lru_cache()
 def get_settings() -> Settings:
     return Settings()
 
+SETTINGS = get_settings()
 
 @lru_cache()
 def get_embeddings() -> HuggingFaceEmbeddings:
-    settings = get_settings()
-    return HuggingFaceEmbeddings(model_name=settings.embedding_model)
-
+    return HuggingFaceEmbeddings(model_name=SETTINGS.embedding_model)
 
 @lru_cache()
 def get_vector_store() -> Chroma:
-    settings = get_settings()
     embeddings = get_embeddings()
 
-    client = chromadb.HttpClient(host=settings.chroma_host, port=8000)
+    client = chromadb.HttpClient(host=SETTINGS.chroma_host, port=8000)
 
     return Chroma(
         client=client,
-        collection_name=settings.collection_name,
+        collection_name=SETTINGS.collection_name,
         embedding_function=embeddings,
     )
 
-
 def get_document_service() -> DocumentService:
-    settings = get_settings()
     vector_store = get_vector_store()
 
     document_loader_repository = DocumentLoaderRepositoryImpl("src/app/backend/temp_files")
@@ -54,7 +49,7 @@ def get_document_service() -> DocumentService:
 
     text_splitter = RecursiveTextSplitterImpl(chunk_size=1000, chunk_overlap=200)
     llm_service = GoogleLLMServiceImpl(
-        api_key=settings.google_api_key, model=settings.gemini_model
+        api_key=SETTINGS.google_api_key, model=SETTINGS.gemini_model
     )
 
     return DocumentService(
