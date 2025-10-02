@@ -1,8 +1,9 @@
 from typing import Any
+
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
-from app.backend.domain.services.llm_service import LLMService
 
+from app.backend.domain.services.llm_service import LLMService
 
 class GoogleLLMServiceImpl(LLMService):
     def __init__(self, api_key: str, model: str):

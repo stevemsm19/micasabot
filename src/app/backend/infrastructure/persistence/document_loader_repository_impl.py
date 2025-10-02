@@ -1,19 +1,21 @@
+# TODO: refactor
+
 import os
 from typing import List
 from fastapi import UploadFile, HTTPException
+
 from langchain_community.document_loaders import PyPDFLoader
-from app.backend.domain.entities.document import Document
+from langchain_core.documents import Document
+
 from app.backend.domain.repositories.document_loader_repository import (
     DocumentLoaderRepository,
 )
-
 
 class DocumentLoaderRepositoryImpl(DocumentLoaderRepository):
     def __init__(self, upload_dir: str):
         self.upload_dir = upload_dir
 
     def save_file(self, file: UploadFile) -> str:
-
         if file.filename is None:
             raise HTTPException(
                 status_code=400, detail="Uploaded file must have a filename"
@@ -33,10 +35,14 @@ class DocumentLoaderRepositoryImpl(DocumentLoaderRepository):
     async def load_pdf(self, file_path: str) -> List[Document]:
         loader = PyPDFLoader(file_path)
         pages = []
+
         async for page in loader.alazy_load():
-            pages.append(
-                Document(page_content=page.page_content, metadata={"source": file_path})
-            )
+            relative_source = file_path.split("temp_files/")[-1]
+
+            page_number = page.metadata.get("page_label") or page.metadata.get("page")
+
+            pages.append(Document(page_content=page.page_content,metadata={"source": relative_source, "page": page_number}))
+
         return pages
 
     def load_txt(self, file_path: str) -> List[Document]:
