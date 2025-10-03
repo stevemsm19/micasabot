@@ -5,7 +5,10 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
 from app.backend.config.settings import Settings
+
 from app.backend.application.services.document_service import DocumentService
+from app.backend.application.services.search_service import SearchService
+
 from app.backend.infrastructure.persistence.document_loader_repository_impl import (
     DocumentLoaderRepositoryImpl,
 )
@@ -48,13 +51,23 @@ def get_document_service() -> DocumentService:
     vector_store_repository = ChromaRepositoryImpl(vector_store)
 
     text_splitter = RecursiveTextSplitterImpl(chunk_size=1000, chunk_overlap=200)
-    llm_service = GoogleLLMServiceImpl(
-        api_key=SETTINGS.google_api_key, model=SETTINGS.gemini_model
-    )
 
     return DocumentService(
         vector_store_repository=vector_store_repository,
         document_loader_repository=document_loader_repository,
-        text_splitter=text_splitter,
+        text_splitter=text_splitter
+    )
+
+def get_search_service() -> SearchService:
+    vector_store = get_vector_store()
+    
+    vector_store_repository = ChromaRepositoryImpl(vector_store)
+
+    llm_service = GoogleLLMServiceImpl(
+        api_key=SETTINGS.google_api_key, model=SETTINGS.gemini_model
+    )
+
+    return SearchService(
+        vector_store_repository=vector_store_repository,
         llm_service=llm_service,
     )
