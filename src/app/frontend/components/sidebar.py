@@ -24,7 +24,7 @@ def set_variables_sidebar():
     with st.sidebar:
         st.markdown("---")
         st.subheader("Parámetros del Bot")
-        st.info("Estos valores se pasan al bot para ajustar cómo recupera y prioriza los documentos almacenados.")
+        st.caption("Estos valores se pasan al bot para ajustar cómo recupera y prioriza los documentos almacenados.")
 
         num_results = st.number_input(
             label="Número de resultados",

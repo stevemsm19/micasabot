@@ -1,4 +1,5 @@
 import requests
+import streamlit as st
 from app.frontend.config.settings import get_settings
 from app.frontend.utils.messages import show_temporary_message
 
@@ -11,7 +12,7 @@ def upload_files(documents):
             try:
                 response = requests.post(f"{settings.backend_api_base_url}{settings.documents_endpoint}", files=file_payload)
                 if response.status_code != 200:
-                    show_temporary_message(f"Error uploading {doc.name}: {response.text}", "error", 10)
+                    show_temporary_message(f"Error uploading {doc.name}: {response.text}", "error")
                     return
             except Exception as e:
                 show_temporary_message(f"Failed to connect to backend: {e}", "error")
@@ -24,6 +25,7 @@ def get_agent_response(prompt, num_results, similarity_threshold):
         "num_results": num_results,
         "similarity_threshold": similarity_threshold
     }
+    st.write(f"{settings.backend_api_base_url}{settings.documents_endpoint}")
 
     try:
         response = requests.post(
