@@ -3,10 +3,33 @@ import streamlit as st
 from app.frontend.services.api_service import get_agent_response
 from app.frontend.utils.constants import CHAT_SUGGESTIONS
 
-def init_chat():
+def initialize_state():
     if "messages" not in st.session_state:
-        st.session_state.messages = [
-        ]
+        st.session_state.messages = []
+
+    if "is_processing" not in st.session_state:
+        st.session_state.is_processing = False
+
+    if "selected_suggestion" not in st.session_state:
+        st.session_state.selected_suggestion = None
+
+    if "initial_question" not in st.session_state:
+        st.session_state.initial_question = None
+
+def get_user_prompt():
+    prompt = None
+
+    if st.session_state.selected_suggestion:
+        st.session_state.is_processing = True
+        prompt = st.session_state.selected_suggestion
+        st.session_state.selected_suggestion = None
+
+    elif st.session_state.initial_question:
+        st.session_state.is_processing = True
+        prompt = st.session_state.initial_question
+        st.session_state.initial_question = None
+
+    return prompt
 
 def display_chat_intro():
     with st.container():
@@ -65,4 +88,5 @@ def generate_agent_response(prompt, num_results, similarity_threshold):
             "content": f"{answer}{sources_text}"
         })
 
+    st.session_state.is_processing = False
     st.rerun()
