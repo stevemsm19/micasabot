@@ -16,24 +16,3 @@ st.html(
     </div>
     """
 )
-
-st.title("📚 Fuentes")
-
-html_sources = """
-<div">
-    <ul style="display: inline-block; text-align: left; list-style-type: none; padding-left: 0;">
-"""
-for name, url in SOURCES.items():
-    html_sources += f"""
-        <li style="margin: 3px 0;">
-            ▪️ <a href="{url}" target="_blank" style="text-decoration-color: #0d1b2a; color: #0d1b2a;">
-                {name}
-            </a>
-        </li>
-    """
-html_sources += """
-    </ul>
-</div>
-"""
-
-st.html(html_sources)
