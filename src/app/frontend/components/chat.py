@@ -40,8 +40,27 @@ def generate_agent_response(prompt, num_results, similarity_threshold):
 
     with st.spinner("Procesando..."):
         response_data, error = get_agent_response(prompt, num_results, similarity_threshold)
+        sources = []
 
-        content = error if error else response_data.get("answer")
-        st.session_state.messages.append({"role": "assistant", "content": content})
+        if error:
+            answer = error
+        else:
+            answer = response_data.get("answer")
+            context = response_data.get("context", [])
+            for item in context:
+                metadata = item["metadata"]
+                sources.append(metadata["source"])
+
+        sources = list(set(sources))
+
+        if sources:
+            sources_text = f"\n\n📚 **Fuentes utilizadas:** {', '.join(sources)}"
+        else:
+            sources_text = ""
+
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": f"{answer}{sources_text}"
+        })
 
     st.rerun()
