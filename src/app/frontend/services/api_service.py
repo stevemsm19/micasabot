@@ -7,16 +7,17 @@ settings = get_settings()
 
 def upload_files(documents):
     if documents is not None:
-        for doc in documents:
-            file_payload = {"files": (doc.name, doc.getvalue(), doc.type)}
-            try:
-                response = requests.post(f"{settings.backend_api_base_url}{settings.documents_endpoint}", files=file_payload)
-                if response.status_code != 200:
-                    show_temporary_message(f"Error uploading {doc.name}: {response.text}", "error")
+        with st.spinner("Cargando documentos...", show_time=True):
+            for doc in documents:
+                file_payload = {"files": (doc.name, doc.getvalue(), doc.type)}
+                try:
+                    response = requests.post(f"{settings.backend_api_base_url}{settings.documents_endpoint}", files=file_payload)
+                    if response.status_code != 200:
+                        show_temporary_message(f"Error uploading {doc.name}: {response.text}", "error")
+                        return
+                except Exception as e:
+                    show_temporary_message(f"Failed to connect to backend: {e}", "error")
                     return
-            except Exception as e:
-                show_temporary_message(f"Failed to connect to backend: {e}", "error")
-                return
         show_temporary_message("Documentos cargados correctamente.", "success")
 
 def get_agent_response(prompt, num_results, similarity_threshold):
@@ -25,7 +26,6 @@ def get_agent_response(prompt, num_results, similarity_threshold):
         "num_results": num_results,
         "similarity_threshold": similarity_threshold
     }
-    st.write(f"{settings.backend_api_base_url}{settings.documents_endpoint}")
 
     try:
         response = requests.post(
@@ -34,6 +34,6 @@ def get_agent_response(prompt, num_results, similarity_threshold):
         )
         if response.status_code == 200:
             return response.json(), None
-        return None, f"❌ Error {response.status_code}: {response.text}"
+        return None, f"Error {response.status_code}: {response.text}"
     except requests.exceptions.RequestException as e:
-        return None, f"⚠️ Error de conexión: {e}"
+        return None, f"Error de conexión: {e}"

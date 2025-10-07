@@ -15,10 +15,10 @@ def upload_documents_sidebar():
 def handle_upload_button(documents):
     with st.sidebar:
         if st.button("Cargar Documentos", type="primary"):
-            if documents:
-                upload_files(documents)
-            else:
-                show_temporary_message("Por favor, sube al menos un archivo antes de continuar.", "error")
+                if documents:
+                    upload_files(documents)
+                else:
+                    show_temporary_message("Por favor, sube al menos un archivo antes de continuar.", "error")
 
 def set_variables_sidebar():
     with st.sidebar:
