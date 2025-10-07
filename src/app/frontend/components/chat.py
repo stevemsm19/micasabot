@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from app.frontend.services.api_service import get_agent_response
 from app.frontend.utils.constants import CHAT_SUGGESTIONS
@@ -54,7 +55,8 @@ def generate_agent_response(prompt, num_results, similarity_threshold):
         sources = list(set(sources))
 
         if sources:
-            sources_text = f"\n\n📚 **Fuentes utilizadas:** {', '.join(sources)}"
+            sources_clean = [os.path.splitext(source)[0] for source in sources]
+            sources_text = f"\n\n📚 **Fuentes utilizadas:** {', '.join(sources_clean)}"
         else:
             sources_text = ""
 
