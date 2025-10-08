@@ -4,8 +4,8 @@ from typing import List, Dict, Any
 @dataclass
 class SearchRequestDTO:
     question: str
-    num_results: int = 4
-    similarity_threshold: float = 0.5
+    num_results: int
+    similarity_threshold: float
 
 @dataclass
 class SearchResponseDTO:

@@ -1,6 +1,6 @@
 # app/backend/domain/repositories/vector_store_repository.py
 from abc import ABC, abstractmethod
-from typing import List
+from typing import Any, Dict, List
 from app.backend.domain.entities.document_entity import DocumentEntity
 
 class VectorStoreRepository(ABC):
@@ -15,4 +15,8 @@ class VectorStoreRepository(ABC):
         num_results: int, 
         similarity_threshold: float
     ) -> List[DocumentEntity]:
+        pass
+
+    @abstractmethod
+    async def get_embeddings(self) -> List[Dict[str, Any]]:
         pass

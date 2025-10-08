@@ -1,4 +1,6 @@
-from typing import List
+import numpy as np
+
+from typing import Any, Dict, List
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document as LangchainDocument
@@ -11,7 +13,6 @@ class ChromaRepositoryImpl(VectorStoreRepository):
         self.vector_store = vector_store
 
     async def add_document(self, documents: List[DocumentEntity]) -> List[str]:
-        
         langchain_docs = [
             LangchainDocument(
                 page_content=doc.content,
@@ -27,7 +28,7 @@ class ChromaRepositoryImpl(VectorStoreRepository):
         num_results: int,
         similarity_threshold: float
     ) -> List[DocumentEntity]:
-        
+
         results = self.vector_store.similarity_search_with_score(query, num_results)
 
         entities: List[DocumentEntity] = []
@@ -41,3 +42,13 @@ class ChromaRepositoryImpl(VectorStoreRepository):
                 entities.append(entity)
 
         return entities
+    
+    async def get_embeddings(self) -> Dict[str, List[Any]]:
+        data = self.vector_store.get(include=["embeddings", "metadatas"])
+        embeddings = [np.array(e).tolist() for e in data["embeddings"]]
+        metadatas = data["metadatas"]
+
+        return {
+            "embeddings": embeddings,
+            "metadatas": metadatas,
+        }
