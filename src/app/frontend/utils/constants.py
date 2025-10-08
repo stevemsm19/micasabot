@@ -1,3 +1,7 @@
+DOCUMENTS_ENDPOINT="documents/add"
+SEARCH_ENDPOINT="ask-question"
+EMBEDDING_ENDPOINT="embeddings"
+
 CHAT_SUGGESTIONS = [
     "¿Un colombiano tiene derecho a tener una vivienda?",
     "¿Que es leasing habitacional?",
