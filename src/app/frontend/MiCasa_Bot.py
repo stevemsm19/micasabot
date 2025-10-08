@@ -1,7 +1,9 @@
 import streamlit as st
 
 from app.frontend.components.sidebar import upload_documents_sidebar, handle_upload_button, set_variables_sidebar
-from app.frontend.components.chat import initialize_state, get_user_prompt, display_chat_history, generate_agent_response, display_chat_intro
+from app.frontend.components.chat.chat_agent import generate_agent_response
+from app.frontend.components.chat.chat_state import initialize_state, get_user_prompt
+from app.frontend.components.chat.chat_ui import display_chat_intro, display_chat_history
 
 def main():
     st.set_page_config("MiCasa Bot")
