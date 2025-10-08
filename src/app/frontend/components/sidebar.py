@@ -14,11 +14,16 @@ def upload_documents_sidebar():
 
 def handle_upload_button(documents):
     with st.sidebar:
-        if st.button("Cargar Documentos", type="primary"):
-                if documents:
-                    upload_files(documents)
-                else:
-                    show_temporary_message("Por favor, sube al menos un archivo antes de continuar.", "error")
+        if st.button("Cargar Documentos", type="primary", disabled=st.session_state.is_processing_answer):
+            if documents:
+                response_data, error = upload_files(documents)
+
+                if error:
+                    return show_temporary_message(f"{error}", "error")
+
+                show_temporary_message(response_data, "success")
+            else:
+                show_temporary_message("Por favor, sube al menos un archivo valido antes de continuar.", "error")
 
 def set_variables_sidebar():
     with st.sidebar:
@@ -32,7 +37,8 @@ def set_variables_sidebar():
             max_value=20,
             value=3,
             step=1,
-            help="Número de documentos más relevantes que el bot considerará en su respuesta."
+            help="Número de documentos más relevantes que el bot considerará en su respuesta.",
+            disabled=st.session_state.is_processing_answer
         )
 
         similarity_threshold = st.slider(
@@ -41,7 +47,13 @@ def set_variables_sidebar():
             max_value=1.0,
             value=0.7,
             step=0.1,
-            help="Nivel mínimo de similitud requerido entre la consulta y los documentos."
+            help="Nivel mínimo de similitud requerido entre la consulta y los documentos.",
+            disabled=st.session_state.is_processing_answer
         )
 
         return num_results, similarity_threshold
+
+def handle_sidebar():
+    documents = upload_documents_sidebar()
+    handle_upload_button(documents)
+    return set_variables_sidebar()

@@ -1,29 +1,30 @@
 import streamlit as st
 
-def initialize_state():
+def initialize_states():
     if "messages" not in st.session_state:
         st.session_state.messages = []
-
-    if "is_processing" not in st.session_state:
-        st.session_state.is_processing = False
 
     if "selected_suggestion" not in st.session_state:
         st.session_state.selected_suggestion = None
 
-    if "initial_question" not in st.session_state:
-        st.session_state.initial_question = None
+    if "temp_user_input" not in st.session_state:
+        st.session_state.temp_user_input = None
+
+    if "user_input" not in st.session_state:
+        st.session_state.user_input = None
+    
+    if "is_processing_answer" not in st.session_state:
+        st.session_state.is_processing_answer = False
 
 def get_user_prompt():
-    prompt = None
+    st.session_state.is_processing_answer = False
+    prompt_sources = ["selected_suggestion", "temp_user_input", "user_input"]
 
-    if st.session_state.selected_suggestion:
-        st.session_state.is_processing = True
-        prompt = st.session_state.selected_suggestion
-        st.session_state.selected_suggestion = None
+    for key in prompt_sources:
+        value = st.session_state.get(key)
+        if value:
+            st.session_state.is_processing_answer = True
+            st.session_state[key] = None
+            return value
 
-    elif st.session_state.initial_question:
-        st.session_state.is_processing = True
-        prompt = st.session_state.initial_question
-        st.session_state.initial_question = None
-
-    return prompt
+    return None

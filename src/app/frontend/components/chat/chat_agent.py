@@ -2,11 +2,8 @@ import os
 import streamlit as st
 
 from app.frontend.services.api_service import get_agent_response
-from app.frontend.components.chat.chat_ui import add_user_message
 
 def generate_agent_response(prompt, num_results, similarity_threshold):
-    
-    add_user_message(prompt)
 
     if st.session_state.messages[-1]["role"] == "assistant":
         return
@@ -37,5 +34,5 @@ def generate_agent_response(prompt, num_results, similarity_threshold):
             "content": f"{answer}{sources_text}"
         })
 
-    st.session_state.is_processing = False
+    st.session_state.is_processing_answer = False
     st.rerun()
