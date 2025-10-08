@@ -8,6 +8,7 @@ from app.backend.config.settings import Settings
 
 from app.backend.application.services.document_service import DocumentService
 from app.backend.application.services.search_service import SearchService
+from app.backend.application.services.embedding_service import EmbeddingService
 
 from app.backend.infrastructure.persistence.document_loader_repository_impl import (
     DocumentLoaderRepositoryImpl,
@@ -22,6 +23,10 @@ from app.backend.infrastructure.services.google_llm_service_impl import (
     GoogleLLMServiceImpl,
 )
 
+from app.backend.infrastructure.services.google_embedding_impl import (
+    GoogleEmbeddingServiceImpl,
+)
+
 @lru_cache()
 def get_settings() -> Settings:
     return Settings()
@@ -29,14 +34,19 @@ def get_settings() -> Settings:
 SETTINGS = get_settings()
 
 @lru_cache()
-def get_embeddings() -> HuggingFaceEmbeddings:
-    return HuggingFaceEmbeddings(model_name=SETTINGS.embedding_model)
+def get_embeddings() -> GoogleEmbeddingServiceImpl:
+    return GoogleEmbeddingServiceImpl(
+        api_key=SETTINGS.google_api_key,
+        model=SETTINGS.embedding_model
+    )
 
 @lru_cache()
 def get_vector_store() -> Chroma:
     embeddings = get_embeddings()
 
     client = chromadb.HttpClient(host=SETTINGS.chroma_host, port=8000)
+    
+    client.get_or_create_collection(SETTINGS.collection_name)
 
     return Chroma(
         client=client,
@@ -71,3 +81,10 @@ def get_search_service() -> SearchService:
         vector_store_repository=vector_store_repository,
         llm_service=llm_service,
     )
+
+def get_embedding_service():
+    vector_store = get_vector_store()
+    
+    vector_store_repository = ChromaRepositoryImpl(vector_store)
+
+    return EmbeddingService(vector_store_repository)
