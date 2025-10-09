@@ -1,8 +1,9 @@
 import streamlit as st
 
-from app.frontend.utils.constants import SOURCES
+current_page = "about_project"
+st.session_state.last_page = current_page
 
-st.set_page_config(page_title="Proyecto")
+st.set_page_config(page_title="Información")
 st.title("ℹ️ Información")
 
 st.html(

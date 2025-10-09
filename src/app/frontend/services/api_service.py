@@ -2,7 +2,8 @@ import requests
 import streamlit as st
 
 from app.frontend.config.settings import get_settings
-from app.frontend.utils.constants import DOCUMENTS_ENDPOINT, EMBEDDING_ENDPOINT, SEARCH_ENDPOINT
+
+from app.frontend.utils.constants.endpoints import DOCUMENTS_ENDPOINT, EMBEDDING_ENDPOINT, SEARCH_ENDPOINT
 
 settings = get_settings()
 

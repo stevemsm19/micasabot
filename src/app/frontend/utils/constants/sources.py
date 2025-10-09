@@ -1,14 +1,3 @@
-DOCUMENTS_ENDPOINT="documents/add"
-SEARCH_ENDPOINT="ask-question"
-EMBEDDING_ENDPOINT="embeddings"
-
-CHAT_SUGGESTIONS = [
-    "¿Un colombiano tiene derecho a tener una vivienda?",
-    "¿Que es leasing habitacional?",
-    "¿Que son los subsidios familiares de vivienda?",
-    "¿Cuales son los valores máximos para una vivienda de interés social?",
-]
-
 SOURCES = {
     "Decreto 145 de 2000": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=12331",
     "Decreto 154 de 2014": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=75379",

@@ -1,12 +1,9 @@
 import streamlit as st
 
-from app.frontend.components.chat.chat_agent import generate_agent_response
-from app.frontend.utils.constants import CHAT_SUGGESTIONS
+from app.frontend.features.chat.agent_response_handler import generate_agent_response
+from app.frontend.features.chat.user_prompt_handler import add_user_prompt
 
-def add_user_message(prompt: str):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+from app.frontend.utils.constants.chat_suggestions import CHAT_SUGGESTIONS
 
 def display_chat_intro():
     with st.container():
@@ -41,5 +38,5 @@ def handle_chat_flow(user_prompt, num_results, similarity_threshold):
     )
 
     if user_prompt:
-        add_user_message(user_prompt)
+        add_user_prompt(user_prompt)
         generate_agent_response(user_prompt, num_results, similarity_threshold)

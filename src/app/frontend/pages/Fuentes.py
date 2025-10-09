@@ -1,5 +1,8 @@
 import streamlit as st
-from app.frontend.utils.constants import SOURCES
+from app.frontend.utils.constants.sources import SOURCES
+
+current_page = "sources"
+st.session_state.last_page = current_page
 
 st.set_page_config(page_title="Fuentes")
 st.title("📚 Fuentes")
