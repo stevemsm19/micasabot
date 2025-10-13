@@ -1,6 +1,9 @@
 from typing import Any, Dict, List
 
-from app.backend.domain.repositories.vector_store_repository import VectorStoreRepository
+from app.backend.domain.repositories.vector_store_repository import (
+    VectorStoreRepository,
+)
+
 
 class EmbeddingService:
     def __init__(

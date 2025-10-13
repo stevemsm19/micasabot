@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Dict, Union
 from app.backend.domain.entities.document_entity import DocumentEntity
+
 
 class DocumentLoaderRepository(ABC):
     @abstractmethod
-    async def load_documents(self, file_data: List[dict]) -> List[DocumentEntity]:
+    async def load_documents(
+        self, file_data: List[Dict[str, Union[bytes, str]]]
+    ) -> List[DocumentEntity]:
         pass

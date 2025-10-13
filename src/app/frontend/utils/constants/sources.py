@@ -13,7 +13,7 @@ SOURCES = {
     "Decreto 1727 de 2021": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=174446",
     "Decreto 1787 de 2004": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=13827",
     "Decreto 1895 de 2016": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=78154",
-    "Decreto 1924 de 2009": "Decreto 1924 de 2009",
+    "Decreto 1924 de 2009": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=36305",
     "Decreto 2005 de 2001": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=48923",
     "Decreto 2080 de 2010": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=39840",
     "Decreto 2190 de 2009": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=36468",
@@ -27,9 +27,8 @@ SOURCES = {
     "Decreto 3670 de 2009": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=37497",
     "Decreto 3760 de 2008": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=33201",
     "Decreto 4587 de 2008": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=34055",
-    "Decreto 431 de 2024": "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=169400",
     "Ley 9 de 1989": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=1175",
     "Ley 61 de 1936": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=8254",
     "Decreto 949 de 2022": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=187326",
-    "ABC Plan de Vivienda - Mi casa en Bogotá": "https://www.habitatbogota.gov.co/transparencia/tramites-servicios/mi-casa-en-bogota"
+    "ABC Plan de Vivienda - Mi casa en Bogotá": "https://www.habitatbogota.gov.co/transparencia/tramites-servicios/mi-casa-en-bogota",
 }

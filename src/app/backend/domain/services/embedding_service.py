@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+
 class EmbeddingService(ABC):
     @abstractmethod
-    async def embed_documents(self, texts: List[str]) -> List[List[float]]:
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
         pass
-    
+
     @abstractmethod
-    async def embed_query(self, text: str) -> List[float]:
+    def embed_query(self, text: str) -> List[float]:
         pass

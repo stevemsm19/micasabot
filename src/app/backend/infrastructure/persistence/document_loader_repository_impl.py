@@ -1,11 +1,13 @@
 import os
-import pymupdf 
+import pymupdf
 
-from typing import List
+from typing import Dict, List, Union, cast
 
 from fastapi import HTTPException
 
-from app.backend.domain.repositories.document_loader_repository import DocumentLoaderRepository
+from app.backend.domain.repositories.document_loader_repository import (
+    DocumentLoaderRepository,
+)
 from app.backend.domain.entities.document_entity import DocumentEntity
 
 
@@ -47,8 +49,7 @@ class DocumentLoaderRepositoryImpl(DocumentLoaderRepository):
                 )
 
                 entity = DocumentEntity(
-                    content=text,
-                    metadata={"source": relative_source, "page": i + 1}
+                    content=text, metadata={"source": relative_source, "page": i + 1}
                 )
                 entities.append(entity)
 
@@ -62,19 +63,20 @@ class DocumentLoaderRepositoryImpl(DocumentLoaderRepository):
             with open(file_path, "r", encoding="utf-8") as file:
                 content = file.read()
 
-            entity = DocumentEntity(
-                content=content,
-                metadata={"source": file_path}
-            )
+            entity = DocumentEntity(content=content, metadata={"source": file_path})
             return [entity]
 
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error loading TXT: {str(e)}")
 
-    async def load_documents(self, file_data: List[dict]) -> List[DocumentEntity]:
+    async def load_documents(
+        self, file_data: List[Dict[str, Union[bytes, str]]]
+    ) -> List[DocumentEntity]:
         saved_file_paths = []
         for file_info in file_data:
-            file_path = self.__save_file(file_info["filename"], file_info["content"])
+            filename = cast(str, file_info["filename"])
+            content = cast(bytes, file_info["content"])
+            file_path = self.__save_file(filename, content)
             saved_file_paths.append(file_path)
 
         entities: List[DocumentEntity] = []

@@ -7,30 +7,31 @@ from langchain_core.documents import Document as LangchainDocument
 from app.backend.domain.entities.document_entity import DocumentEntity
 from app.backend.domain.services.text_splitter_service import TextSplitterService
 
+
 class RecursiveTextSplitterImpl(TextSplitterService):
-    def __init__(self, chunk_size: int = 1200, chunk_overlap: int = 200):
+    def __init__(self, chunk_size: int, chunk_overlap: int):
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
         )
 
     def __clean_text(self, text: str) -> str:
-        text = re.sub(r'\n+', '\n', text)
-        text = re.sub(r'\t+', ' ', text) 
-        text = re.sub(r'\s{2,}', ' ', text)
+        text = re.sub(r"\n+", "\n", text)
+        text = re.sub(r"\t+", " ", text)
+        text = re.sub(r"\s{2,}", " ", text)
         text = text.strip()
 
         return text
-    
+
     def __split_by_sections(self, doc: LangchainDocument) -> List[LangchainDocument]:
         text = self.__clean_text(doc.page_content)
 
         pattern = (
-            r'(?=^\s*(?:'
-            r'ART[ÍI]CULO\s*\d+[A-Zº°]*\.?|'
-            r'CONSIDERANDO|DECRETA|'
-            r'CAP[ÍI]TULO|T[ÍI]TULO|PAR[ÁA]GRAFO)'
-            r'\b)'
+            r"(?=^\s*(?:"
+            r"ART[ÍI]CULO\s*\d+[A-Zº°]*\.?|"
+            r"CONSIDERANDO|DECRETA|"
+            r"CAP[ÍI]TULO|T[ÍI]TULO|PAR[ÁA]GRAFO)"
+            r"\b)"
         )
 
         parts = re.split(pattern, text, flags=re.MULTILINE | re.IGNORECASE)
@@ -38,7 +39,9 @@ class RecursiveTextSplitterImpl(TextSplitterService):
 
         split_sections = []
         for part in valid_parts:
-            split_sections.append(LangchainDocument(page_content=part, metadata=doc.metadata))
+            split_sections.append(
+                LangchainDocument(page_content=part, metadata=doc.metadata)
+            )
 
         return split_sections
 
@@ -47,7 +50,7 @@ class RecursiveTextSplitterImpl(TextSplitterService):
             LangchainDocument(page_content=doc.content, metadata=doc.metadata)
             for doc in documents
         ]
-        
+
         structured_docs = []
         for doc in langchain_docs:
             structured_docs.extend(self.__split_by_sections(doc))

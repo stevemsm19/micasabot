@@ -1,8 +1,9 @@
-
+from typing import Dict
 from app.frontend.utils.session_state import apply_session_states
 
-def init_chat_state():
-    defaults = {
+
+def init_chat_state() -> None:
+    defaults: Dict[str, object] = {
         "messages": [],
         "selected_suggestion": None,
         "temp_user_input": None,

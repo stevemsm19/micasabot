@@ -27,25 +27,28 @@ from app.backend.infrastructure.services.google_embedding_impl import (
     GoogleEmbeddingServiceImpl,
 )
 
+
 @lru_cache()
 def get_settings() -> Settings:
     return Settings()
 
+
 SETTINGS = get_settings()
+
 
 @lru_cache()
 def get_embeddings() -> GoogleEmbeddingServiceImpl:
     return GoogleEmbeddingServiceImpl(
-        api_key=SETTINGS.google_api_key,
-        model=SETTINGS.embedding_model
+        api_key=SETTINGS.google_api_key, model=SETTINGS.embedding_model
     )
+
 
 @lru_cache()
 def get_vector_store() -> Chroma:
     embeddings = get_embeddings()
 
     client = chromadb.HttpClient(host=SETTINGS.chroma_host, port=8000)
-    
+
     client.get_or_create_collection(SETTINGS.collection_name)
 
     return Chroma(
@@ -54,10 +57,13 @@ def get_vector_store() -> Chroma:
         embedding_function=embeddings,
     )
 
+
 def get_document_service() -> DocumentService:
     vector_store = get_vector_store()
 
-    document_loader_repository = DocumentLoaderRepositoryImpl("src/app/backend/temp_files")
+    document_loader_repository = DocumentLoaderRepositoryImpl(
+        "src/app/backend/temp_files"
+    )
     vector_store_repository = ChromaRepositoryImpl(vector_store)
 
     text_splitter = RecursiveTextSplitterImpl(chunk_size=1000, chunk_overlap=200)
@@ -65,12 +71,13 @@ def get_document_service() -> DocumentService:
     return DocumentService(
         vector_store_repository=vector_store_repository,
         document_loader_repository=document_loader_repository,
-        text_splitter=text_splitter
+        text_splitter=text_splitter,
     )
+
 
 def get_search_service() -> SearchService:
     vector_store = get_vector_store()
-    
+
     vector_store_repository = ChromaRepositoryImpl(vector_store)
 
     llm_service = GoogleLLMServiceImpl(
@@ -82,9 +89,10 @@ def get_search_service() -> SearchService:
         llm_service=llm_service,
     )
 
-def get_embedding_service():
+
+def get_embedding_service() -> EmbeddingService:
     vector_store = get_vector_store()
-    
+
     vector_store_repository = ChromaRepositoryImpl(vector_store)
 
     return EmbeddingService(vector_store_repository)

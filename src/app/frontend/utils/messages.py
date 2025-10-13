@@ -1,7 +1,8 @@
 import streamlit as st
 import time
 
-def show_temporary_message(content: str, message_type: str, duration: int = 2):
+
+def show_temporary_message(content: str, message_type: str, duration: int = 4) -> None:
     msg = st.empty()
     if message_type == "success":
         msg.success(content, icon="✅")

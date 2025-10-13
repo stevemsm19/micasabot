@@ -7,9 +7,10 @@ from app.backend.config.dependencies import get_embedding_service
 
 router = APIRouter(tags=["embeddings"])
 
+
 @router.get("/embeddings")
 async def get_embeddings(
-    limit: int | None = None, 
+    limit: int | None = None,
     embedding_service: EmbeddingService = Depends(get_embedding_service),
 ) -> EmbeddingsResponseDTO:
 
@@ -28,5 +29,5 @@ async def get_embeddings(
         total_embeddings=total,
         embedding_dimension=dim,
         embeddings=embeddings,
-        metadatas=metadatas
+        metadatas=metadatas,
     )

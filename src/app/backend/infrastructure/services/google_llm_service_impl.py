@@ -5,6 +5,7 @@ from langchain_core.prompts import PromptTemplate
 
 from app.backend.domain.services.llm_service import LLMService
 
+
 class GoogleLLMServiceImpl(LLMService):
     def __init__(self, api_key: str, model: str):
         self.llm = ChatGoogleGenerativeAI(model=model, api_key=api_key)
