@@ -18,15 +18,17 @@ async def get_embeddings(
     embeddings = data["embeddings"]
     metadatas = data["metadatas"]
 
-    total = len(embeddings)
-    dim = len(embeddings[0]) if total > 0 else 0
+    total_embeddings = len(embeddings)
+    total_documents = len({m["source"] for m in metadatas})
+    dim = len(embeddings[0]) if total_embeddings > 0 else 0
 
     if limit is not None:
         embeddings = embeddings[:limit]
         metadatas = metadatas[:limit]
 
     return EmbeddingsResponseDTO(
-        total_embeddings=total,
+        total_embeddings=total_embeddings,
+        total_documents=total_documents,
         embedding_dimension=dim,
         embeddings=embeddings,
         metadatas=metadatas,

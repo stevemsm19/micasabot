@@ -26,6 +26,7 @@ from app.backend.infrastructure.services.google_llm_service_impl import (
 from app.backend.infrastructure.services.google_embedding_impl import (
     GoogleEmbeddingServiceImpl,
 )
+from app.backend.utils.constants import CHUNK_OVERLAP, CHUNK_SIZE
 
 
 @lru_cache()
@@ -41,6 +42,13 @@ def get_embeddings() -> GoogleEmbeddingServiceImpl:
     return GoogleEmbeddingServiceImpl(
         api_key=SETTINGS.google_api_key, model=SETTINGS.embedding_model
     )
+
+
+# @lru_cache()
+# def get_embeddings() -> HuggingFaceEmbeddings:
+#     return HuggingFaceEmbeddings(
+#         model_name="sentence-transformers/all-MiniLM-L6-v2"
+#     )
 
 
 @lru_cache()
@@ -66,7 +74,9 @@ def get_document_service() -> DocumentService:
     )
     vector_store_repository = ChromaRepositoryImpl(vector_store)
 
-    text_splitter = RecursiveTextSplitterImpl(chunk_size=1000, chunk_overlap=200)
+    text_splitter = RecursiveTextSplitterImpl(
+        chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
+    )
 
     return DocumentService(
         vector_store_repository=vector_store_repository,

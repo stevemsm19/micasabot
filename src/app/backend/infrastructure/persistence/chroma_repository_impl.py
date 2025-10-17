@@ -42,6 +42,7 @@ class ChromaRepositoryImpl(VectorStoreRepository):
 
     async def get_embeddings(self) -> Dict[str, List[Any]]:
         data = self.vector_store.get(include=["embeddings", "metadatas"])
+
         embeddings = [np.array(e).tolist() for e in data["embeddings"]]
         metadatas = data["metadatas"]
 
