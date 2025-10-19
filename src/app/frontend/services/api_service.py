@@ -16,6 +16,7 @@ from app.frontend.config.settings import get_settings
 SETTINGS = get_settings()
 base_url = f"http://{SETTINGS.api_host}:{SETTINGS.api_port}/"
 
+
 def upload_files(
     documents: Optional[List[UploadedFile]],
 ) -> Tuple[Optional[str], Optional[str]]:
@@ -58,9 +59,7 @@ def get_agent_response(
     }
 
     try:
-        response = requests.post(
-            url=f"{base_url}{SEARCH_ENDPOINT}", json=payload
-        )
+        response = requests.post(url=f"{base_url}{SEARCH_ENDPOINT}", json=payload)
 
         if response.status_code != 200:
             return None, f"Error {response.status_code}: {response.text}"

@@ -22,19 +22,26 @@
 )
 
 #layoutC(
-  title: "About my project",
+  title: "Agenda",
   content: [
-    #align(center + horizon,
-    [
-      #image("images/capstone/logo.png", width: 40%)
-    ])
+    #v(20pt)
+    #text(
+      size: 28pt,
+      [
+        1. Introduction
+        2. Identified Problem
+        3. Proposed Solution
+        4. Demonstration
+        5. Benefits and Conclusions
+      ]
+    )
   ]
 )
 
-
-#layoutA(
+#layoutC(
+  title: "Introduction",
   content: [
-    = Did you know?
+    === Did you know?
 
     #v(10pt)
 
@@ -70,7 +77,7 @@
 )
 
 #layoutC(
-  title: "",
+  title: "Identified Problem",
   content: [
     #align(center + horizon,
     [
@@ -79,21 +86,21 @@
         weight: "bold",
         fill: theme.primary,
         [
-          So, if there are benefits and opportunities,
-          why do so many Colombians still not take the step towards owning a home?
+          So, if there are benefits and opportunities, why are so many Colombians not encouraged to buy a home?
         ],
       )
     ])
   ]
 )
 
-#layoutC(
-  title: "The answer lies in lack of knowledge and, of course, in their budget",
+#layoutA(
   content: [
     #v(20pt)
     #text(
       size: 30pt,
       [
+        The answer lies in lack of knowledge and, of course, in their budget
+
         - Many families do not know which subsidies they can apply for.
         - They are unaware of the types of housing available.
         - They confuse the different kinds of mortgage loans.
@@ -103,27 +110,122 @@
   ]
 )
 
+
 #layoutC(
-  title: "The solution: MiCasaBot",
+  title: "Proposed Solution",
+  content: [
+    #align(center + horizon,
+    [
+      #image("images/capstone/logo.png", width: 40%)
+    ])
+  ]
+)
+
+#layoutA(
   content: [
     #v(10pt)
     #text(size: 28pt)[
       “MiCasaBot is a chatbot that responds clearly, quickly, and with verified information
       from official sources such as the Ministry of Housing, decrees, articles, and laws…”
     ]
+
+    #v(50pt)
+
+    #grid(
+      columns: (1fr, 1fr),
+      gutter: 0.4in,
+      [
+        #align(center)[#image("images/capstone/source_1.png", width: 80%)]
+      ],
+      [
+        #align(center)[#image("images/capstone/source_2.png", width: 80%)]
+      ],
+    )
+
     #v(20pt)
+
     #text(size: 28pt)[
       == Users can ask in simple language:
       #v(10pt)
       - What subsidies can I apply for?
-      - What is the difference between a mortgage loan and leasing?
+      - What is mortgage leasing?
       - What percentage of the house must I have as a down payment?
     ]
   ]
 )
 
 #layoutC(
-  title: "But why could this project interest you?",
+  title: "What’s inside MiCasaBot?",
+  content: [
+    #image("images/capstone/main_chat.png", width: 80%)
+    == About the project
+    #image("images/capstone/about_project.png", width: 100%)
+
+    == Resources used by the bot
+    #image("images/capstone/sources.png", width: 80%)
+
+    == Data Visualization
+    #image("images/capstone/data_visualization.png", width: 74%)
+  ]
+)
+
+#layoutC(
+  title: "How does it work?",
+  content: [
+    #align(center + horizon,
+    [
+      #image("images/capstone/architecture.png", width: 75%)
+    ])
+  ]
+)
+
+#layoutC(
+  title: "Tech Stack",
+  content: [
+    #v(30pt)
+    #grid(
+      columns: (1fr,1fr),
+      gutter: 0.4in,
+      [
+        #align(center)[#image("images/capstone/google_embedings_logo.png", width: 50%)]
+      ],
+      [
+        #align(center)[#image("images/capstone/langchain_logo.png", width: 50%)]
+      ],
+      [
+        #align(center)[#image("images/capstone/chroma_logo.png", width: 20%)]
+      ],
+      [
+        #align(center)[#image("images/capstone/streamlit_logo.png", width: 50%)]
+      ],
+      [
+        #align(center)[#image("images/capstone/gemini_logo.png", width: 50%)]
+      ],
+      [
+        #align(center)[#image("images/capstone/fastapi_logo.png", width: 50%)]
+      ],
+    )
+  ]
+)
+
+#layoutA(
+  content: [
+    #align(center + horizon,
+    [
+      #text(
+        size: 50pt,
+        weight: "bold",
+        fill: theme.primary,
+        [
+          Demonstration
+        ],
+      )
+    ])
+  ]
+)
+
+#layoutC(
+  title: "Benefits and Conclusions",
   content: [
     #contentBox(
       fill: theme.primaryLightest,
@@ -146,16 +248,7 @@
   ]
 )
 
-#layoutC(
-  title: "What is its architecture like?",
-  content: [
-    #align(center, [
-      #image("images/capstone/C4_container.png", width: 100%)])
-  ]
-)
-
-#layoutC(
-  title: "",
+#layoutA(
   content: [
     #align(center + horizon, [
       #text(
