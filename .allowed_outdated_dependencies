@@ -6,3 +6,5 @@ marshmallow
 posthog
 pydantic_core
 urllib3
+pillow
+triton
