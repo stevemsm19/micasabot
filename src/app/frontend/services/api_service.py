@@ -5,15 +5,16 @@ from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 from typing import List, Optional, Tuple, Dict, Any
 
-from app.frontend.config.settings import get_settings
 from app.frontend.utils.constants.endpoints import (
     DOCUMENTS_ENDPOINT,
     EMBEDDING_ENDPOINT,
     SEARCH_ENDPOINT,
 )
 
-settings = get_settings()
+from app.frontend.config.settings import get_settings
 
+SETTINGS = get_settings()
+base_url = f"http://{SETTINGS.api_host}:{SETTINGS.api_port}/"
 
 def upload_files(
     documents: Optional[List[UploadedFile]],
@@ -26,7 +27,7 @@ def upload_files(
 
         try:
             response = requests.post(
-                f"{settings.backend_api_base_url}{DOCUMENTS_ENDPOINT}",
+                f"{base_url}{DOCUMENTS_ENDPOINT}",
                 files=file_payload,
             )
             if response.status_code != 200:
@@ -58,7 +59,7 @@ def get_agent_response(
 
     try:
         response = requests.post(
-            url=f"{settings.backend_api_base_url}{SEARCH_ENDPOINT}", json=payload
+            url=f"{base_url}{SEARCH_ENDPOINT}", json=payload
         )
 
         if response.status_code != 200:
@@ -73,7 +74,7 @@ def get_agent_response(
 def get_embeddings() -> Tuple[Optional[Dict[str, Any]], Optional[str]]:
     try:
         response = requests.get(
-            url=f"{settings.backend_api_base_url}{EMBEDDING_ENDPOINT}",
+            url=f"{base_url}{EMBEDDING_ENDPOINT}",
         )
 
         if response.status_code != 200:

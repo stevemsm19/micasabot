@@ -43,14 +43,6 @@ def get_embeddings() -> GoogleEmbeddingServiceImpl:
         api_key=SETTINGS.google_api_key, model=SETTINGS.embedding_model
     )
 
-
-# @lru_cache()
-# def get_embeddings() -> HuggingFaceEmbeddings:
-#     return HuggingFaceEmbeddings(
-#         model_name="sentence-transformers/all-MiniLM-L6-v2"
-#     )
-
-
 @lru_cache()
 def get_vector_store() -> Chroma:
     embeddings = get_embeddings()

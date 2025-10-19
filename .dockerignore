@@ -2,7 +2,6 @@
 **/*.pyc
 **/*.ipynb
 **/*.egg-info
-src/app/frontend
 src/app/data
 src/app/lib
 src/app/docker-compose.yml
