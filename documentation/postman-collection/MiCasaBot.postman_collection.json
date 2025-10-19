@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"question\": \"Que es leasing habitacional?\"\n}",
+					"raw": "{\n  \"question\": \"Un colombiano tiene derecho a tener una vivienda?\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,11 +48,7 @@
 						{
 							"key": "files",
 							"type": "file",
-							"src": [
-								"postman-cloud:///1f09c895-468e-4ae0-90cb-54b06edad180",
-								"postman-cloud:///1f09a28d-26a0-4c20-affb-5eec01f40a99",
-								"postman-cloud:///1f09bfd2-ead3-45e0-a2b8-16bc450a61c4"
-							]
+							"src": "postman-cloud:///1f09a28c-6a42-41a0-ab94-13a2b4458f94"
 						}
 					]
 				},
@@ -65,6 +61,23 @@
 						"api",
 						"documents",
 						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Embeddings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_bot}}/embeddings",
+					"host": [
+						"{{url_bot}}"
+					],
+					"path": [
+						"embeddings"
 					]
 				}
 			},
